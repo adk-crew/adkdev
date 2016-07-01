@@ -1,0 +1,18 @@
+{
+  "name": "PiCam",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "description": "PiCam",
+  "author": {
+    "name": "Mark",
+    "email": ""
+  },
+  "dependencies": {
+    "express": "~4.9.0",
+    "jade": "~1.6.0",
+    "stylus": "0.42.3"
+  }
+}

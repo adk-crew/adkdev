@@ -1,0 +1,12 @@
+﻿body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color:bisque;
+}
+
+.streamstyle {
+    margin: 0px auto;
+    display: block;
+    margin-top: 20px;
+  }
+

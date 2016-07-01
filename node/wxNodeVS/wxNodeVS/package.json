@@ -1,0 +1,17 @@
+{
+  "name": "wxNodeVS",
+  "version": "0.0.0",
+  "description": "wxNodeVS",
+  "main": "app.js",
+  "author": {
+    "name": "Administrator",
+    "email": ""
+  },
+  "dependencies": {
+    "express": "3.4.4",
+    "jade": "*",
+    "stylus": "*",
+    "serialport": "*",
+    "socket.io": "*"
+  }
+}

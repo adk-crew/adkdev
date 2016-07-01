@@ -1,0 +1,19 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+ background-color:bisque;
+}
+a {
+  color: #00b7ff;
+}
+input {
+    background-color:darkcyan;
+  
+}
+.myfields label, .myfields input {
+  display:inline-block;
+}
+
+.myfields label {
+  width:200px; 
+}

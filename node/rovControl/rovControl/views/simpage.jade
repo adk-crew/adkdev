@@ -1,0 +1,26 @@
+﻿extends layout
+
+block content
+	script(src='public/javascripts/jquery-1.10.2.min.js') 
+	script(src='public/javascripts/jquery-ui-1.8.20.min.js')
+	script(src='public/javascripts/socket.io.js')
+	script(src='public/javascripts/simpage.js')
+	
+	h1 Welcome to Wx Watch!
+
+	fieldset(class='myfields')
+		legend wxWatch temperature input 
+		div
+			label temperature
+			input(id='tempInput', type='text')
+		div
+			label humidity
+			input(id='humInput', type='text')
+		div
+			label dewpoint
+			input(id='dewInput', type='text')
+		div
+			label slider
+			input(id='TempSlider', type='range')
+		div(id='gamepadPrompt')
+	button(id='btn1') send data

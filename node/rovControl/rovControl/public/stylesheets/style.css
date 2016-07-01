@@ -1,0 +1,47 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+a {
+  color: #00b7ff;
+}
+
+
+#menuebar{
+  background-color:darkcyan;
+  height:50px;
+  width:1024px;
+
+ 
+}
+
+#leftsidebar{
+  background-color:aqua;
+  height:480px;
+  width:192px;
+  float:left
+}
+
+#canvas{
+  
+  height:480px;
+  width:640px;
+  float:left;
+
+}
+
+#rightsidebar{
+  background-color:aliceblue;
+  height:480px;
+  width:192px;
+  float:left;
+
+}
+
+#statusbar{
+  background-color:darkgreen;
+    height:50px;
+  width:1024px;
+  float:left;
+
+}
