@@ -8,7 +8,7 @@ a {
 
 
 #menuebar{
-  background-color:darkcyan;
+  background-color:blue;
   height:50px;
   width:1024px;
 
@@ -16,7 +16,7 @@ a {
 }
 
 #leftsidebar{
-  background-color:aqua;
+  background-color:mediumaquamarine;
   height:480px;
   width:192px;
   float:left
@@ -27,11 +27,12 @@ a {
   height:480px;
   width:640px;
   float:left;
+  
 
 }
 
 #rightsidebar{
-  background-color:aliceblue;
+  background-color:mediumaquamarine;
   height:480px;
   width:192px;
   float:left;
@@ -39,9 +40,30 @@ a {
 }
 
 #statusbar{
-  background-color:darkgreen;
+  background-color:blue;
     height:50px;
   width:1024px;
   float:left;
+
+}
+#depthgauge{
+    background-color:red;
+    height:160px;
+    width:192px;
+    float:left;
+
+}
+#compass{
+    background-color:green;
+    height:160px;
+    width:192px;
+    float:left;
+
+}
+#otherthing{
+    background-color:orange;
+    height:160px;
+    width:192px;
+    float:left;
 
 }

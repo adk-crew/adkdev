@@ -5,7 +5,7 @@
  * screen res of our daylight monitor is 1024 X 600
  * 
 */
-
+var gauges = [];
 var socket = io();
 var streamURL = "ws://192.170.167.214:8084";
 var vidX = 640;
@@ -31,8 +31,9 @@ var jsonDataOut = {
     "RVT": 0
 };
 
-$(document).ready(function () {
-   
+$(document).ready(function () { 
+
+    createGauge("Depth", "Feet");
     //set up canvas for streaming video from pystreaming server
     var canvas = document.getElementById('videoCanvas');
     var client = new WebSocket(streamURL);
@@ -82,7 +83,24 @@ $(document).ready(function () {
     };
 });
 
-
+function createGauge(name, label, min, max) {
+    var config = 
+ {
+        size: 200,
+        label: label,
+        min: undefined != min ? min : 0,
+        max: undefined != max ? max : 500,
+        minorTicks: 5
+    }
+    
+    var range = config.max - config.min;
+    config.greenZones = [{ from: 0, to: 300 }];
+    config.yellowZones = [{ from: 300, to: 450 }];
+    config.redZones = [{ from: 450, to: 500 }];
+    console.log(config);
+    gauges[name] = new Gauge("depthgauge", config);
+    gauges[name].render();
+} 
 
 function pollGamepad() {
     /* 
