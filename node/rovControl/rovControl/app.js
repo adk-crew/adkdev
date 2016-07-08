@@ -1,5 +1,6 @@
 ﻿var express = require('express');
 var path = require('path');
+var portName = 'COM6';
 //var favicon = require('serve-favicon');
 //var logger = require('morgan');
 //var bodyParser = require('body-parser');
@@ -7,6 +8,9 @@ var path = require('path');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var http = require('http');
+var SerialPort = require("serialport").SerialPort;
+var usbPort;
+var isUSBOpen = false;
 
 var app = express();
 
@@ -24,12 +28,40 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/public', express.static(__dirname + '/public'));
 
-
-
+//start the socket server to talk with web pages
 var socketServer = require("socket.io")();
 var server = http.createServer(app);
 socketServer.attach(server);
 
+//open a serial port to talk to arduino over USB
+usbPort = new SerialPort(portName, {
+    baudrate: 9600,
+    // defaults for Arduino serial communication
+    dataBits: 8,
+    parity: 'none',
+    stopBits: 1,
+    flowControl: false
+});
+
+usbPort.on("open", function () {
+    console.log('open serial communication');
+    isUSBOpen = true;
+    // Listens to incoming data
+    usbPort.on('data', function (data) {
+        
+        console.log(data.toString());
+                    
+    });
+});
+
+usbPort.on('error', function (err) {
+    console.log(err);
+});
+
+
+
+
+//start listening for http requests
 //!! remember with express 4 we need to comment out the socket io listen in the bin/www file
 server.listen(app.get('port'));
 server.on('error', onError);
@@ -43,14 +75,12 @@ socketServer.on('connection', function (socket) {
     console.log("Total clients connected : ", Object.keys(sockets).length);
     socket.emit('onconnection', 'hello');
     
-
     //if (Object.keys(sockets).length == 1) {
     //    camera.start();
     //}
     
     socket.on('disconnect', function () {
-        delete sockets[socket.id];
-        
+        delete sockets[socket.id];       
         console.log("disconnect client remaining connected : ", Object.keys(sockets).length);
         
         // no more sockets, kill the stream
@@ -59,11 +89,22 @@ socketServer.on('connection', function (socket) {
        // }
          
     });
+    
+    socket.on('onSimDepth', function (val) {
+            
+        console.log("onSimDepth depth=%d", val.Depth);
+        socketServer.emit('onDepth', val);
+    });
+    
+    
+    socket.on('onJoystick', function (val) {
+              
+     ///   console.log("onJoystick LHT=%d, RHT=%d, LVT=%d, RVT=%d", val.LHT, val.RHT, val.LVT, val.RVT);
+        var sCmd = String.format("0={0};1={1};2={2};3={3}\n", val.LHT, val.RHT, val.LVT, val.RVT);
+        console.log(sCmd);
+        if(isUSBOpen)
+            usbPort.write(sCmd);
 
-    socket.on('joystickChange', function (val) {
-        
-        
-        console.log("on joystickChange LHT=%d, RHT=%d, LVT=%d, RVT=%d", val.LHT, val.RHT, val.LVT, val.RVT);
     });
     
     
@@ -100,6 +141,18 @@ app.use(function (err, req, res, next) {
     });
 });
 
+
+if (!String.format) {
+    String.format = function (format) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        return format.replace(/{(\d+)}/g, function (match, number) {
+            return typeof args[number] != 'undefined'
+        ? args[number] 
+        : match
+            ;
+        });
+    };
+}
 
 function onError(error) {
     if (error.syscall !== 'listen') {

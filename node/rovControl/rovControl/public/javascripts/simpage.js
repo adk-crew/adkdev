@@ -1,7 +1,6 @@
 ﻿var jsonData = {
-    "Temp": 0,
-    "Hum": 0,
-    "Dew": 0,
+    "Depth": 0,
+    
 };
 
 var repGP;
@@ -70,10 +69,10 @@ $(document).ready(function () {
         //socket.emit('simbutton', "{'Temp':77, 'Hum':50, 'Dew':20}");
         //alert($("#TempSlider").val())
 
-        jsonData.Temp = $("#TempSlider").val();
-        jsonData.Dew = $("#humInput").val();
-        jsonData.Hum = $("#dewInput").val();
-        socket.emit('simbutton', jsonData);
+        jsonData.Depth = $("#TempSlider").val();
+       // jsonData.Dew = $("#humInput").val();
+        //jsonData.Hum = $("#dewInput").val();
+        socket.emit('onSimDepth', jsonData);
 
     });
 	 

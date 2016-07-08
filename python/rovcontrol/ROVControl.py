@@ -1,13 +1,12 @@
 
-
 import serial
 import pygame
 import time
 
-#serialPort = dev/ttyUSBO
-serialPort = '/dev/ttyS0'
-#serialPort = 'COM9'      # Arduino Uno
-baudRate = 4800
+#serialPort = 'dev/ttyUSBO'
+#serialPort = '/dev/ttyS0'
+serialPort = 'COM6'      # Arduino Uno
+baudRate = 9600
 
 
 sNeutral = 'LHT=1500;RHT=1500;LVT=1500;RVT=1500\n'
@@ -44,8 +43,8 @@ try:
         pygame.event.pump()
         lx = j.get_axis(0)
         ly = j.get_axis(1)
-        ry = j.get_axis(2)
-        rx = j.get_axis(3)
+        ry = j.get_axis(3)
+        rx = j.get_axis(4)
         if jspos_history == [lx,ly,rx,ry]: continue
         
         jspos_history = [lx,ly,rx,ry]
@@ -101,7 +100,7 @@ try:
         #print ('Left Horizontal Thruster = %i') % LHT
         #print ('Right Horizontal Thruster = %i') % RHT
 
-        sCmd = 'LHT=%i;RHT=%i;LVT=%i;RVT=%i\n' % (LHT, RHT, LVT, RVT)
+        sCmd = '0=%i;1=%i;2=%i;3=%i\n' % (LHT, RHT, LVT, RVT)
 
         print (sCmd)
         

@@ -57,6 +57,11 @@ $(document).ready(function () {
 	    //alert("connected");
     });
     
+    socket.on('onDepth', function (value) {
+        alert("onDepth " + value.Depth);      
+    });
+    
+
     /*
      * used on a img tag when pi came in capture mode (see picam project)
     socket.on('liveStream', function (url) {
@@ -200,7 +205,7 @@ function pollGamepad() {
 
     //$("#statusbar").html(sCmd);
     $("#statusbar").text(sCmd);
-    socket.emit('joystickChange', jsonDataOut);
+    socket.emit('onJoystick', jsonDataOut);
 }
 
 if (!String.format) {
