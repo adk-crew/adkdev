@@ -58,7 +58,8 @@ $(document).ready(function () {
     });
     
     socket.on('onDepth', function (value) {
-        alert("onDepth " + value.Depth);      
+        alert("onDepth " + value.Depth);  
+        gauges["Depth"].redraw(value.Depth);    
     });
     
 
@@ -88,13 +89,13 @@ $(document).ready(function () {
     };
 });
 
-function createGauge(name, label, min, max) {
+function createGauge(name, label, minVal, maxVal) {
     var config = 
  {
         size: 200,
         label: label,
-        min: undefined != min ? min : 0,
-        max: undefined != max ? max : 500,
+        min: undefined != minVal ? minVal : 0,
+        max: undefined != maxVal ? maxVal : 500,
         minorTicks: 5
     }
     
@@ -106,6 +107,12 @@ function createGauge(name, label, min, max) {
     gauges[name] = new Gauge("depthgauge", config);
     gauges[name].render();
 } 
+
+function pollGamepad2() 
+    {
+    alert("hello");
+
+    }
 
 function pollGamepad() {
     /* 

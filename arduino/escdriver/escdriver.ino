@@ -11,7 +11,7 @@
 
 #define ESC_STOPPED 1500
 
-#define NUM_MOTORS 3
+#define NUM_MOTORS 4
 
 
 #define SSerialRX        5 ///10  //Serial Receive pin
@@ -36,16 +36,16 @@ char input[100];
 int inIndex = 0;
   
 void setup() {
-
+/*
   motors[0].pin = 8; //pins for test robot
   motors[1].pin = 9;
   motors[2].pin = 10;
   //motors[2].pin = 11;
-
-  //motors[0].pin = 6; motor pins for younger kids Rov
-  //motors[1].pin = 7;
-  //motors[2].pin = 8;
-  //motors[2].pin = 9;
+*/
+  motors[0].pin = 6;    //motor pins for younger kids Rov
+  motors[1].pin = 7;
+  motors[2].pin = 8;
+  motors[3].pin = 9;
 
   for(int x = 0; x < NUM_MOTORS; x++)
   {
@@ -57,7 +57,7 @@ void setup() {
 
   pinMode(SSerialTxControl, OUTPUT);  
   digitalWrite(SSerialTxControl, RS485Receive);  // Init Transceiver
-  RS485Serial.begin(9600); 
+  RS485Serial.begin(19200); 
   RS485Serial.flush();
   Serial.println("listening");
   
@@ -82,10 +82,10 @@ void loop() {
 
         input[inIndex] = RS485Serial.read();
 
-        if(input[inIndex] == 10 || (input[inIndex] > 47 && input[inIndex] < 62))
-        {
+       // if(input[inIndex] == 10 || (input[inIndex] > 47 && input[inIndex] < 62))
+       // {
         
-          //Serial.print(input[inIndex]);
+       //   Serial.print(input[inIndex]);
           
           if ((input[inIndex] == '\n') || (input[inIndex] == '\r')) {
               input[inIndex] = 0;
@@ -101,7 +101,7 @@ void loop() {
               break;
            }
            inIndex++;
-        }
+       // }
       }
        //RS485Serial.flush();
       

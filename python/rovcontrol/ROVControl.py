@@ -3,9 +3,9 @@ import serial
 import pygame
 import time
 
-#serialPort = 'dev/ttyUSBO'
+#serialPort = '/dev/ttyUSB0'
 #serialPort = '/dev/ttyS0'
-serialPort = 'COM6'      # Arduino Uno
+serialPort = 'COM5'      # Arduino Uno
 baudRate = 9600
 
 
@@ -51,8 +51,8 @@ try:
 
         #print ('lx = %f') % lx
         #print ('ly = %f') % ly
-        #print ('rx = %f') % rx
-        #print ('ry = %f') % ry
+        print ('rx = %f') % rx
+        print ('ry = %f') % ry
 
         LHT = RHT = 1500
 

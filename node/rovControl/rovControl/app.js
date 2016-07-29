@@ -35,7 +35,7 @@ socketServer.attach(server);
 
 //open a serial port to talk to arduino over USB
 usbPort = new SerialPort(portName, {
-    baudrate: 9600,
+    baudrate: 115200,
     // defaults for Arduino serial communication
     dataBits: 8,
     parity: 'none',
