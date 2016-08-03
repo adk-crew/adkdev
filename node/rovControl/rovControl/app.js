@@ -100,7 +100,7 @@ socketServer.on('connection', function (socket) {
     socket.on('onJoystick', function (val) {
               
      ///   console.log("onJoystick LHT=%d, RHT=%d, LVT=%d, RVT=%d", val.LHT, val.RHT, val.LVT, val.RVT);
-        var sCmd = String.format("0={0};1={1};2={2};3={3}\n", val.LHT, val.RHT, val.LVT, val.RVT);
+        var sCmd = String.format("0={0};1={1};2={2};3={3};4={4}\n", val.LHT, val.RHT, val.LVT, val.RVT,val.CamPos);
         console.log(sCmd);
         if(isUSBOpen)
             usbPort.write(sCmd);

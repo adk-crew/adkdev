@@ -8,8 +8,8 @@
 #define ESC_MAX_REV 1100
 #define ESC_STOPPED 1500
 #define BNO055_SAMPLERATE_DELAY_MS (100)
-#define NUM_MOTORS 4
-
+#define NUM_MOTORS 5
+int nCamPos = 90;
 
 typedef struct motorDef
 {
@@ -43,11 +43,15 @@ void setup() {
   motors[1].pin = 9;
   motors[2].pin = 10;
   motors[3].pin = 11;
-
+  motors[4].pin = 12; //Normal servo motor for cam control, not ESC drive motor
+  
   for(int x = 0; x < NUM_MOTORS; x++)
   {
      motors[x].motor.attach(motors[x].pin);
-     motors[x].motor.writeMicroseconds(ESC_STOPPED);    //must send the stop signal on start up to arm the ESC
+     if(x <= 3)
+     {
+      motors[x].motor.writeMicroseconds(ESC_STOPPED);    //must send the stop signal on start up to arm the ESC
+     }
   }
   
   Serial.println("Orientation Sensor Test"); Serial.println("");
@@ -89,12 +93,37 @@ void loop() {
             int motorId = atoi(command);
             ++separator;
             int thrust = atoi(separator);
-
+            
             Serial.println(motorId);
             Serial.println(thrust);
-
-            motors[motorId].motor.writeMicroseconds(thrust);
-    
+            if(motorId<= 3)
+            {
+              motors[motorId].motor.writeMicroseconds(thrust);
+            }
+           else
+            {
+             switch(thrust)
+             {
+              case 0:
+              break;
+              case 1:
+               //nCamPos = nCamPos > 10 ? --10: 0;
+               if(nCamPos > 10)
+               {
+                nCamPos = nCamPos -10;
+                }
+              break;
+              case 2:
+              if(nCamPos < 180)
+              {
+                nCamPos = nCamPos + 10;
+                }
+              break;
+              } 
+              Serial.println(nCamPos);
+              //motors[4].motor.writeMicroseconds(nCamPos);
+              motors[4].motor.write(nCamPos);
+            }
             
         }
         // Find the next command in input string

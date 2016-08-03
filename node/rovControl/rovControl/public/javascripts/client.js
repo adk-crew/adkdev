@@ -16,6 +16,7 @@ var yLStick = 0;
 var xRStick = 0;
 var yRStick = 0;
 var sLastCmd
+var CamPos = 0;
 
 
 var jsonDataIn = {
@@ -28,7 +29,8 @@ var jsonDataOut = {
     "LHT": 0,
     "RHT": 0,
     "LVT": 0,
-    "RVT": 0
+    "RVT": 0,
+    "CamPos": 0
 };
 
 $(document).ready(function () { 
@@ -146,7 +148,16 @@ function pollGamepad() {
     yLStick = gp.axes[1];
     xRStick = gp.axes[2];
     yRStick = gp.axes[3];
+    CamPos = 0;
     
+    if (gp.buttons[12].pressed) {
+        CamPos = 2;  //Top Dpad button 
+    }
+    else if (gp.buttons[13].pressed) {
+        CamPos = 1; //Bottom Dpad Button 
+    }
+    
+
     //left and right horizontal thrusters
     var LHT = RHT = 1500;
     
@@ -197,10 +208,10 @@ function pollGamepad() {
     
    // var sCmd = "LHT=" + LHT + "LVT=" + LVT;
     //html += "Stick " + yLStick+ ": " + LHT + "<br/>";
-    var sCmd = String.format("LHT={0};RHT={1};LVT={2};RVT={3}\n", LHT, RHT, LVT, RVT);
+    var sCmd = String.format("LHT={0};RHT={1};LVT={2};RVT={3};CamPos={4};\n", LHT, RHT, LVT, RVT, CamPos);
     //sCmd.format("LHT={0}\n", LHT);
     
-    if (jsonDataOut.LHT == LHT && jsonDataOut.RHT == RHT && jsonDataOut.LVT == LVT && jsonDataOut.RVT == RVT)
+    if (jsonDataOut.LHT == LHT && jsonDataOut.RHT == RHT && jsonDataOut.LVT == LVT && jsonDataOut.RVT == RVT && jsonDataOut.CamPos == CamPos)
         return;
     
 
@@ -208,7 +219,7 @@ function pollGamepad() {
     jsonDataOut.RHT = RHT;
     jsonDataOut.LVT = LVT;
     jsonDataOut.RVT = RVT;
-
+    jsonDataOut.CamPos = CamPos;
 
     //$("#statusbar").html(sCmd);
     $("#statusbar").text(sCmd);
