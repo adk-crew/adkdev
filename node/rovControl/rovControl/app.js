@@ -97,6 +97,12 @@ socketServer.on('connection', function (socket) {
     });
     
     
+    socket.on('onAttitude', function (val){
+    
+        console.log("onAttitude pitch=%d, roll=%d", val.Pitch, val.Roll);
+        socketServer.emit('onAttitude', val);
+    });
+    
     socket.on('onJoystick', function (val) {
               
      ///   console.log("onJoystick LHT=%d, RHT=%d, LVT=%d, RVT=%d", val.LHT, val.RHT, val.LVT, val.RVT);

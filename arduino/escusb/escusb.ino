@@ -9,7 +9,7 @@
 #define ESC_STOPPED 1500
 #define BNO055_SAMPLERATE_DELAY_MS (100)
 #define NUM_MOTORS 5
-int nCamPos = 90;
+int nCamPos;
 
 typedef struct motorDef
 {
@@ -38,6 +38,9 @@ void displaySensorDetails(void)
 
 void setup() {
   Serial.begin(115200);
+  nCamPos = motors[4].motor.read();
+  Serial.println(nCamPos);
+  Serial.write(nCamPos);
   
   motors[0].pin = 8; //was 10,11,12
   motors[1].pin = 9;
@@ -53,6 +56,7 @@ void setup() {
       motors[x].motor.writeMicroseconds(ESC_STOPPED);    //must send the stop signal on start up to arm the ESC
      }
   }
+
   
   Serial.println("Orientation Sensor Test"); Serial.println("");
     if(!bno.begin())
@@ -96,6 +100,7 @@ void loop() {
             
             Serial.println(motorId);
             Serial.println(thrust);
+            
             if(motorId<= 3)
             {
               motors[motorId].motor.writeMicroseconds(thrust);

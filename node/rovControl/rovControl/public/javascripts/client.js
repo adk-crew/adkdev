@@ -36,6 +36,10 @@ var jsonDataOut = {
 $(document).ready(function () { 
 
     createGauge("Depth", "Feet");
+    //flightIndicator accepts negative and positive. Example for roll -45 goes 45 left.  45 goes 45 right. 390 equivalent to 30. 
+    
+    var attitude = $.flightIndicator('#heading', 'heading', { size: 200, showBox: false, showScrews: false });
+    var attitude = $.flightIndicator('#attitude', 'attitude', {size: 200, showBox: false, showScrews: false });
     //set up canvas for streaming video from pystreaming server
     var canvas = document.getElementById('videoCanvas');
     var client = new WebSocket(streamURL);
@@ -60,11 +64,17 @@ $(document).ready(function () {
     });
     
     socket.on('onDepth', function (value) {
-        alert("onDepth " + value.Depth);  
+        //alert("onDepth " + value.Depth);  
         gauges["Depth"].redraw(value.Depth);    
     });
     
-
+    
+    socket.on('onAttitude', function (value) {
+        //alert("onAttitude " + value.Pitch);
+        attitude.setRoll(value.Roll);
+        attitude.setPitch(value.Pitch);
+        
+    });
     /*
      * used on a img tag when pi came in capture mode (see picam project)
     socket.on('liveStream', function (url) {
@@ -205,6 +215,14 @@ function pollGamepad() {
     
     if (RVT > 1900) RVT = 1900;
     else if (RVT < 1100) RVT = 1100;
+    
+    if (RVT > 1475 && RVT < 1525) RVT = 1500;
+    
+    if (RHT > 1475 && RHT < 1525) RHT = 1500;
+    
+    if (LVT > 1475 && LVT < 1525) LVT = 1500;
+    
+    if (LHT > 1475 && LHT < 1525) LHT = 1500;
     
    // var sCmd = "LHT=" + LHT + "LVT=" + LVT;
     //html += "Stick " + yLStick+ ": " + LHT + "<br/>";

@@ -6,21 +6,17 @@ block content
 	script(src='public/javascripts/socket.io.js')
 	script(src='public/javascripts/simpage.js')
 	
-	h1 Welcome to Wx Watch!
+	h1 Cockpit Sim Inputs
 
 	fieldset(class='myfields')
-		legend wxWatch temperature input 
-		div
-			label temperature
-			input(id='tempInput', type='text')
-		div
-			label humidity
-			input(id='humInput', type='text')
-		div
-			label dewpoint
-			input(id='dewInput', type='text')
+		legend Cockpit Control
 		div
 			label slider
-			input(id='TempSlider', type='range', max='500')
+			input(id='inputDepthSlider', type='range', max='500')
+		div
+			label Roll
+			input(id='inputRollSlider', type='range', min='-90', max='90')
+		div
+			label Pitch
+			input(id='inputPitchSlider', type='range',  min='-90', max='90')
 		div(id='gamepadPrompt')
-	button(id='btn1') send data

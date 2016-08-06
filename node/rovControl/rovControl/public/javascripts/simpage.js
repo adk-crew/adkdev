@@ -1,6 +1,9 @@
 ﻿var jsonData = {
     "Depth": 0,
-    
+    "Temp": 0,
+    "Pitch": 0,
+    "Roll": 0,
+    "Heading": 0 
 };
 
 var repGP;
@@ -30,16 +33,14 @@ function reportOnGamepad() {
 
     var nVal = Math.ceil((gp.axes[1] * 100) + 50);
 
-  //  if (nSticky == nVal) {
+  //  if (nStickY == nVal) {
  //       return;
  //   }
             
-    nSticky = nVal;
-    html += nSticky;
+    nStickY = nVal;
+    html += nStickY;
  
-    jsonData.Temp = nSticky;
-    jsonData.Dew = $("#humInput").val();
-    jsonData.Hum = $("#dewInput").val();
+    jsonData.Temp = nStickY;
     socket.emit('simbutton', jsonData);
     
     $("#gamepadPrompt").html(html);
@@ -53,26 +54,37 @@ $(document).ready(function () {
     });
   
     
-    $('#btn1').click(function () {
-               
-        //socket.emit('simbutton', "{'Temp':77, 'Hum':50, 'Dew':20}");
-   
-        jsonData.Temp = $("#tempInput").val();
-        jsonData.Dew = $("#humInput").val();
-        jsonData.Hum = $("#dewInput").val();
-        socket.emit('simbutton', jsonData);
+
+    $('#inputDepthSlider').change(function () {
+        
+        jsonData.Temp = nStickY;  //for now to debug value needs to change to temp
+        jsonData.Depth = $("#inputDepthSlider").val();
+        jsonData.Pitch = $("#inputPitchSlider").val();
+        jsonData.Roll = $("#inputRollSlider").val();
+
+        socket.emit('onSimDepth', jsonData);
 
     });
-
-    $('#TempSlider').change(function () {
+    
+    $('#inputRollSlider').change(function () {
         
-        //socket.emit('simbutton', "{'Temp':77, 'Hum':50, 'Dew':20}");
-        //alert($("#TempSlider").val())
+        jsonData.Temp = nStickY;  //for now to debug value needs to change to temp
+        jsonData.Depth = $("#inputDepthSlider").val();
+        jsonData.Pitch = $("#inputPitchSlider").val();
+        jsonData.Roll = $("#inputRollSlider").val();
+        
+        socket.emit('onAttitude', jsonData);
 
-        jsonData.Depth = $("#TempSlider").val();
-       // jsonData.Dew = $("#humInput").val();
-        //jsonData.Hum = $("#dewInput").val();
-        socket.emit('onSimDepth', jsonData);
+    });
+    
+    $('#inputPitchSlider').change(function () {
+        
+        jsonData.Temp = nStickY;  //for now to debug value needs to change to temp
+        jsonData.Depth = $("#inputDepthSlider").val();
+        jsonData.Pitch = $("#inputPitchSlider").val();
+        jsonData.Roll = $("#inputRollSlider").val();
+        
+        socket.emit('onAttitude', jsonData);
 
     });
 	 

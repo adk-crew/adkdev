@@ -8,12 +8,17 @@ block content
 	script(src='public/javascripts/jsmpg.js')
 	script(src='public/javascripts/d3.min.js')
 	script(src='public/javascripts/gauge.js')
+	script(src='public/javascripts/jquery.flightindicators.js')
+	link(rel='stylesheet' type='text/css' href='/stylesheets/flightindicators.css')
+	script(src='public/javascripts/bootstrap.min.js')
+	link(rel='stylesheet' href='/stylesheets/bootstrap.min.css')
+
 	div(id='menuebar') menu
-	div(id='leftsidebar') left side
+	div(id='leftsidebar')
+		div(id='depthgauge')
 	div(id='canvas')
 		canvas(id="videoCanvas" width="640px" height="480px")
 	div(id='rightsidebar')
-		div(id='depthgauge')
-		div(id='compass') Compass
-		div(id='otherthing') Temperature
+		div(id='heading')
+		div(id='attitude')
 	div(id='statusbar') status
